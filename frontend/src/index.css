@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 238 241 239; --surface: 247 249 248; --raised: 255 255 255;
+  --ink: 16 32 31; --muted: 83 100 98; --line: 211 220 217;
+  --brand: 11 122 117; --brand-ink: 255 255 255;
+  --signal: 176 110 0; --fault: 190 58 44; --ok: 28 125 76;
+  color-scheme: light;
+}
+.dark {
+  --bg: 11 20 19; --surface: 16 28 27; --raised: 22 38 36;
+  --ink: 228 238 235; --muted: 148 168 164; --line: 38 58 55;
+  --brand: 61 200 189; --brand-ink: 6 26 24;
+  --signal: 240 177 55; --fault: 240 117 100; --ok: 94 207 150;
+  color-scheme: dark;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-bg font-sans text-ink antialiased; }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  :focus-visible { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; border-radius: 6px; }
+  ::selection { background: rgb(var(--brand) / 0.25); }
+  textarea, input { @apply font-sans; }
+}
+
+@layer components {
+  .field {
+    @apply w-full rounded-xl border border-line bg-raised px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/70
+      transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25;
+  }
+  .scroll-thin { scrollbar-width: thin; scrollbar-color: rgb(var(--line)) transparent; }
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgb(var(--line) / 0.55) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line) / 0.55) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse at 70% 30%, #000 10%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, #000 10%, transparent 70%);
+}
+
+@keyframes sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(260%); } }
+.sweep { animation: sweep 1.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
